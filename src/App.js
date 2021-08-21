@@ -1,25 +1,19 @@
-import logo from './logo.svg';
 import './App.css';
+import DataList from "./components/DataList";
+import {Fragment} from "react";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  return <Fragment>
+      <h2>REST API approach</h2>
+      <div className="rest">
+          <DataList />
+      </div>
+      <h2>GraphQL approach</h2>
+      <div className="graphql">
+          <DataList />
+      </div>
+
+  </Fragment>
 }
 
 export default App;
