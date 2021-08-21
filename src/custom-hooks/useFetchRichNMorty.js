@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import {getRickAndMortyData} from "../api/rest/getData";
 
 export function useFetchRichNMorty(types) {
-    const [data, setData] = useState({});
+    const [ricknMortyData, setRickAndMortyData] = useState(null);
     const [isDataLoaded, setIsDataLoaded] = useState(false);
 
     useEffect(() => {
@@ -10,10 +10,10 @@ export function useFetchRichNMorty(types) {
             try {
                 const rickAndMortyRequests = types.map(getRickAndMortyData);
                 const results = await Promise.all(rickAndMortyRequests);
-                const [character, location, episode] = results;
-                const rickAndMortyData = { character, location, episode }
+                const [characters, locations, episodes] = results;
+                const rickAndMortyData = { characters, locations, episodes }
 
-                setData(rickAndMortyData);
+                setRickAndMortyData(rickAndMortyData);
                 setIsDataLoaded(true);
 
             } catch (error) {
@@ -22,6 +22,5 @@ export function useFetchRichNMorty(types) {
         }
         fetchData();
     }, []);
-
-    return {isDataLoaded, data}
+    return {isDataLoaded, ricknMortyData}
 }

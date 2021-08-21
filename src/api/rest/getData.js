@@ -11,14 +11,9 @@ export const getRickAndMortyData = (type) => {
                     const responseData = await fetch(endPoint);
                     const data = await responseData.json();
 
-                    if (isJsonString(data)) {
-                        richAndMortyData = [...richAndMortyData, ...data.results];
-                    } else {
-                        continue;
-                    }
+                   richAndMortyData = [...richAndMortyData, ...data.results];
 
-
-                   if (data.next === null) {
+                   if (data.next !== null) {
                        const rickAndMortyDataKeyVal = richAndMortyData.reduce((dataObj, item) => (
                            {...dataObj, [item.url]: item}
                        ), {});
@@ -35,12 +30,3 @@ export const getRickAndMortyData = (type) => {
         })();
     });
 };
-
-function isJsonString(str) {
-    try {
-        JSON.parse(str);
-    } catch (error) {
-        return false;
-    }
-    return true;
-}

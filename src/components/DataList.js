@@ -11,7 +11,7 @@ const DataList = () => {
 
     return <Fragment>
         <ul>
-            <Card data={loadedData} />
+            <Card data={loadedData.rickAndMorty}/>
         </ul>
     </Fragment>
 }
