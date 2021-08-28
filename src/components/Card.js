@@ -1,7 +1,8 @@
 import {Fragment} from "react";
 
-const Card = ({ characters }) => {
-    const { id, name, image, status, species, location } = characters;
+const Card = ({ character }) => {
+    const { id, name, image, status, species, location } = character;
+
     return <Fragment>
         <div key={id} className="card">
             <h1>{name}</h1>
