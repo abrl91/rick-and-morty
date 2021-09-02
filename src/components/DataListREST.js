@@ -13,7 +13,6 @@ const DataListREST = () => {
         count: 671,
     });
     const { current: currentCharacter } = characterPage;
-    const [characterEpisodes, setCharacterEpisodes] = useState([]);
 
     const request = useCallback(async () => {
         const res = await fetch(currentCharacter);
@@ -42,21 +41,6 @@ const DataListREST = () => {
     }, [request]);
 
 
-    useEffect(() => {
-        characterResults.map(character => {
-            const slimEpisodeArr = character.episode.slice(0, 5);
-            return Promise.all(slimEpisodeArr.map(ep => {
-                return fetch(ep)
-                    .then(res => res.json())
-            }))
-                .then(episodesRes => {
-                    const characterResultsExpended = {...character, episode: episodesRes};
-                    setCharacterEpisodes(charEpisodes => ([
-                        ...charEpisodes, characterResultsExpended
-                    ]))
-                });
-        });
-    }, [characterResults]);
 
     const handleLoadMore = () => {
         setCharacterPage(prev => (
@@ -64,9 +48,8 @@ const DataListREST = () => {
         ));
     }
 
-    const charactersData = characterEpisodes.map((character) => {
-        console.log(character);
-        return <Card key={character.id} character={character}/>
+    const charactersData = characterResults.map((character) => {
+        return <Card key={Math.random()} character={character}/>
     });
 
     return <Fragment>

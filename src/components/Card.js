@@ -1,7 +1,24 @@
-import {Fragment} from "react";
+import {Fragment, useEffect, useState} from "react";
 
 const Card = ({ character }) => {
+    const [characterEpisodes, setCharacterEpisodes] = useState([]);
     const { id, name, image, status, species, location, episode } = character;
+    const firstFiveEpisodes = episode.slice(0, 5);
+
+    useEffect(() => {
+        Promise.all(firstFiveEpisodes.map(ep => {
+            return fetch(ep)
+                .then(res => res.json())
+        }))
+            .then(episodesRes => {
+                setCharacterEpisodes(episodesRes);
+            });
+    }, [firstFiveEpisodes]);
+
+    const episodesArr = characterEpisodes.map(ep => (
+        <li key={ep.id}>{ep.name}</li>
+    ));
+
     return <Fragment>
         <div key={id} className="card">
             <h1>{name}</h1>
@@ -11,9 +28,7 @@ const Card = ({ character }) => {
             <p>{location.name}</p>
             <p>Episodes:</p>
             <ul>
-                {episode.map(ep => (
-                    <li key={ep.id}>{ep.name}</li>
-                ))}
+                {episodesArr}
             </ul>
         </div>
     </Fragment>
