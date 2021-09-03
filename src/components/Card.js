@@ -2,9 +2,9 @@ import {Fragment, useEffect, useState} from "react";
 import classes from './Card.module.css';
 
 const Card = ({ character }) => {
-    const [characterEpisodes, setCharacterEpisodes] = useState([]);
-    const { id, name, image, status, species, location, episode } = character;
-    const firstThreeEpisodes = episode.slice(0, 3);
+    const [episodes, setEpisodes] = useState([]);
+    const { id, name, image, status, species, location, episode: episodesData } = character;
+    const firstThreeEpisodes = episodesData.slice(0, 3);
 
     useEffect(() => {
         Promise.all(firstThreeEpisodes.map(ep => {
@@ -12,11 +12,11 @@ const Card = ({ character }) => {
                 .then(res => res.json())
         }))
             .then(episodesRes => {
-                setCharacterEpisodes(episodesRes);
+                setEpisodes(episodesRes);
             });
     }, []);
 
-    const episodesArr = characterEpisodes.map(ep => (
+    const episodesArr = episodes.map(ep => (
         <li className={classes.episodesList} key={ep.id}>{ep.name}</li>
     ));
 
