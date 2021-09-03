@@ -1,5 +1,6 @@
 import {Fragment, useCallback, useEffect, useState} from "react";
 import Card from "./Card";
+import classes from "./DataList.module.css";
 
 const DataListREST = () => {
     const defaultEndpoint = 'https://rickandmortyapi.com/api';
@@ -49,14 +50,16 @@ const DataListREST = () => {
     }
 
     const charactersData = characterResults.map((character) => {
-        return <Card key={Math.random()} character={character}/>
+        return <Card key={character.id} character={character}/>
     });
 
     return <Fragment>
-        <div className="data-list">
+        <div className={classes.dataList}>
             {charactersData}
         </div>
-        <button onClick={handleLoadMore}>load more</button>
+        <div className={classes.btnWrapper}>
+            <button className={classes.loadMoreBtn} onClick={handleLoadMore}>Load More</button>
+        </div>
     </Fragment>
 }
 

@@ -1,17 +1,20 @@
 import './App.css';
 import {Fragment} from "react";
 import DataListREST from "./components/DataListREST";
+import Header from "./components/Header";
+import {Route} from "react-router-dom";
+import DataListGQL from "./components/DataListGQL";
 
 function App() {
 
   return <Fragment>
-      <h2>REST API approach</h2>
-      <div className="rest">
-         <DataListREST />
-      </div>
-      {/*<h2>GraphQL approach</h2>
-      <div className="graphql">
-      </div>*/}
+      <Header />
+      <Route path='/rest'>
+          <DataListREST />
+      </Route>
+      <Route path='/graphql'>
+          <DataListGQL />
+      </Route>
 
   </Fragment>
 }

@@ -1,0 +1,28 @@
+.dataList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 0 30px;
+}
+
+.btnWrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.loadMoreBtn {
+    background-color: rgb(255, 255, 255);
+    color: rgb(60, 62, 68);
+    border: none;
+    border-radius: 6px;
+    width: 150px;
+    height: 35px;
+    margin: 20px 0;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 5px 5px 3px 1px rgb(82, 86, 89);
+}
+
+.loadMoreBtn:active {
+    transform: translateY(3px);
+}
