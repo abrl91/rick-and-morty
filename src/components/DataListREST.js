@@ -1,5 +1,5 @@
 import {Fragment, useCallback, useEffect, useState} from "react";
-import Card from "./Card";
+import CardREST from "./CardREST";
 import classes from "./DataList.module.css";
 
 const DataListREST = () => {
@@ -50,7 +50,7 @@ const DataListREST = () => {
     }
 
     const charactersData = characterResults.map((character) => {
-        return <Card key={character.id} character={character}/>
+        return <CardREST key={character.id} character={character} />
     });
 
     return <Fragment>

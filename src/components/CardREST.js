@@ -1,7 +1,7 @@
 import {Fragment, useEffect, useState} from "react";
 import classes from './Card.module.css';
 
-const Card = ({ character }) => {
+const CardREST = ({ character }) => {
     const [episodes, setEpisodes] = useState([]);
     const { id, name, image, status, species, location, episode: episodesData } = character;
     const firstThreeEpisodes = episodesData.slice(0, 3);
@@ -40,4 +40,4 @@ const Card = ({ character }) => {
     </Fragment>
 }
 
-export default Card;
+export default CardREST;

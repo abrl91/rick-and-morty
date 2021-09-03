@@ -1,8 +1,8 @@
 import {Fragment} from "react";
 import classes from './DataList.module.css';
-import Card from "./Card";
 import { gql } from "apollo-boost";
 import {useQuery} from "@apollo/react-hooks";
+import CardGraphQL from "./CardGraphQL";
 
 
 const DataListGQL = () => {
@@ -14,9 +14,6 @@ const DataListGQL = () => {
         }
 
     );
-
-/*    const {characters} = data;
-    const {results, info} = characters;*/
 
     const handleLoadMore = () => {
 
@@ -35,14 +32,14 @@ const DataListGQL = () => {
     if(loading) return <p>Loading...</p>
     if (error) return  <p>Error {error.message}</p>
 
-   /* console.log(data, 'data')
-    const charactersMapped = data.characters.results.map(character => {
-        return  <Card key={character.id} character={character} />
-    })*/
+    console.log(data, 'data')
+    const charactersMapped = data?.characters.results.map(character => {
+        return  <CardGraphQL key={character.id} character={character} />
+    })
 
     return <Fragment>
         <div className={classes.dataList}>
-            {/*{charactersMapped}*/}
+            {charactersMapped}
         </div>
         <div className={classes.btnWrapper}>
             <button className={classes.loadMoreBtn} onClick={handleLoadMore}>Load More</button>
@@ -51,7 +48,7 @@ const DataListGQL = () => {
 }
 
 const CHARACTER_QUERY = gql`
-    query getCharacters($page: Int) {
+    query getCharacters($page: Int!) {
       characters(page: $page) {
         info {
           next
