@@ -1,8 +1,8 @@
 import {Fragment, useState} from "react";
 import classes from './DataList.module.css';
-import { gql } from "apollo-boost";
 import {useQuery} from "@apollo/react-hooks";
 import CardDataGraphQL from "./CardDataGraphQL";
+import {CHARACTER_QUERY} from '../graphql-queries/queries';
 
 
 const DataListGQL = () => {
@@ -59,32 +59,5 @@ const DataListGQL = () => {
         </div>
     </Fragment>
 }
-
-const CHARACTER_QUERY = gql`
-    query getCharacters($page: Int!) {
-      characters(page: $page) {
-        info {
-          next
-          prev
-          count
-          pages
-        }
-        results {
-          id
-          name
-          image
-          status
-          species
-          location {
-            name
-          }
-          episode {
-            id
-            name
-          }
-        }
-      }
-    }
-   `
 
 export default DataListGQL;
