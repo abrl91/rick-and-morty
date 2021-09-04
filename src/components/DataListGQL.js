@@ -17,48 +17,45 @@ const DataListGQL = () => {
         },
     );
 
-
-    if(loading) return <h3>Loading...</h3>
+    if (loading) return <h3>Loading...</h3>
     if (error) return  <h3>Error {error.message}</h3>
 
-    console.log(data, 'data')
     const charactersMapped = data?.characters.results.map(character => {
         return  <CardDataGraphQL key={character.id} character={character} />
-    })
+    });
+
+    const handlePage = (isNext) => fetchMore({variables: {
+            page: data.characters.info.next
+        },
+        updateQuery: (prev, {fetchMoreResults}) => {
+            if (!fetchMoreResults) return prev;
+            return Object.assign({}, prev, {
+                characters: [...prev.characters, ...fetchMoreResults.characters]
+            });
+        }
+    }).then(characterInfoAndData => {
+        const pageNumber = isNext
+            ? characterInfoAndData.data.characters.info.next - 1
+            : characterInfoAndData.data.characters.info.prev - 1;
+        setPage(pageNumber);
+    });
+
 
     return <Fragment>
         <div className={classes.dataList}>
             {charactersMapped}
         </div>
         <div className={classes.btnWrapper}>
-            <button className={classes.loadMoreBtn} onClick={() => fetchMore({variables: {
-                    page: data.characters.info.next
-                },
-                updateQuery: (prev, {fetchMoreResults}) => {
-                    if (!fetchMoreResults) return prev;
-                    return Object.assign({}, prev, {
-                        characters: [...prev.characters, ...fetchMoreResults.characters]
-                    });
-                }
-            }).then(characterInfoAndData => {
-                setPage(characterInfoAndData.data.characters.info.prev - 1);
-            })
-            }>Previous</button>
-            <button className={classes.loadMoreBtn} onClick={() => fetchMore({variables: {
-                        page: data.characters.info.next
-                    },
-                    updateQuery: (prev, {fetchMoreResults}) => {
-                        if (!fetchMoreResults) return prev;
-                        return Object.assign({}, prev, {
-                            characters: [...prev.characters, ...fetchMoreResults.characters]
-                        });
-                    }
-                }).then(characterInfoAndData => {
-                    setPage(characterInfoAndData.data.characters.info.next - 1);
-                })
-            }
+            <button
+                className={classes.loadMoreBtn}
+                onClick={() => handlePage(false)}
+                disabled={!data.characters.info.prev}
+            >Previous</button>
+            <button
+                className={classes.loadMoreBtn}
+                onClick={() => handlePage(true)}
+                disabled={!data.characters.info.next}
             >Next</button>
-
         </div>
     </Fragment>
 }

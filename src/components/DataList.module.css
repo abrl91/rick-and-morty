@@ -27,6 +27,11 @@
     transform: translateY(3px);
 }
 
+.loadMoreBtn:disabled {
+    background-color: rgb(149, 148, 148);
+    cursor: none;
+}
+
 h3 {
     color: rgb(255, 255, 255);
     text-align: center;
