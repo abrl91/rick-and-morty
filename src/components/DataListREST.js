@@ -1,5 +1,5 @@
 import {Fragment, useCallback, useEffect, useState} from "react";
-import CardREST from "./CardREST";
+import CardDataREST from "./CardDataREST";
 import classes from "./DataList.module.css";
 
 const DataListREST = () => {
@@ -42,7 +42,6 @@ const DataListREST = () => {
     }, [request]);
 
 
-
     const handleLoadMore = () => {
         setCharacterPage(prev => (
             { ...prev, current: characterPage?.next }
@@ -50,7 +49,7 @@ const DataListREST = () => {
     }
 
     const charactersData = characterResults.map((character) => {
-        return <CardREST key={character.id} character={character} />
+        return <CardDataREST key={character.id} character={character} />
     });
 
     return <Fragment>

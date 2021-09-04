@@ -1,40 +1,29 @@
-import {Fragment} from "react";
+import {Fragment, useState} from "react";
 import classes from './DataList.module.css';
 import { gql } from "apollo-boost";
 import {useQuery} from "@apollo/react-hooks";
-import CardGraphQL from "./CardGraphQL";
+import CardDataGraphQL from "./CardDataGraphQL";
 
 
 const DataListGQL = () => {
+    const [page, setPage] = useState(1)
     const {loading, error,data, fetchMore} = useQuery(
         CHARACTER_QUERY, {
             variables: {
-                page: 1,
-            }
-        }
-
+                page: page,
+            },
+            notifyOnNetworkStatusChange: true,
+            fetchPolicy: "cache-and-network"
+        },
     );
 
-    const handleLoadMore = () => {
 
-       return fetchMore({variables: {
-            page: data.characters.info.next
-            },
-            updateQuery: (prev, {fetchMoreResults}) => {
-                if (!fetchMoreResults) return prev;
-                return Object.assign({}, prev, {
-                    characters: [...prev.characters, ...fetchMoreResults.characters]
-                })
-            }
-        })
-    }
-
-    if(loading) return <p>Loading...</p>
-    if (error) return  <p>Error {error.message}</p>
+    if(loading) return <h3>Loading...</h3>
+    if (error) return  <h3>Error {error.message}</h3>
 
     console.log(data, 'data')
     const charactersMapped = data?.characters.results.map(character => {
-        return  <CardGraphQL key={character.id} character={character} />
+        return  <CardDataGraphQL key={character.id} character={character} />
     })
 
     return <Fragment>
@@ -42,7 +31,34 @@ const DataListGQL = () => {
             {charactersMapped}
         </div>
         <div className={classes.btnWrapper}>
-            <button className={classes.loadMoreBtn} onClick={handleLoadMore}>Load More</button>
+            <button className={classes.loadMoreBtn} onClick={() => fetchMore({variables: {
+                    page: data.characters.info.next
+                },
+                updateQuery: (prev, {fetchMoreResults}) => {
+                    if (!fetchMoreResults) return prev;
+                    return Object.assign({}, prev, {
+                        characters: [...prev.characters, ...fetchMoreResults.characters]
+                    });
+                }
+            }).then(characterInfoAndData => {
+                setPage(characterInfoAndData.data.characters.info.prev - 1);
+            })
+            }>Previous</button>
+            <button className={classes.loadMoreBtn} onClick={() => fetchMore({variables: {
+                        page: data.characters.info.next
+                    },
+                    updateQuery: (prev, {fetchMoreResults}) => {
+                        if (!fetchMoreResults) return prev;
+                        return Object.assign({}, prev, {
+                            characters: [...prev.characters, ...fetchMoreResults.characters]
+                        });
+                    }
+                }).then(characterInfoAndData => {
+                    setPage(characterInfoAndData.data.characters.info.next - 1);
+                })
+            }
+            >Next</button>
+
         </div>
     </Fragment>
 }

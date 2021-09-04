@@ -1,13 +1,12 @@
 import {Fragment} from "react";
-import classes from './Card.module.css';
+import classes from "./Card.module.css";
 
-const Card = ({ character }) => {
-    const { id, name, image, status, species, location, episode: episodesData } = character;
-    const firstThreeEpisodes = episodesData.slice(0, 3);
+const Card = ({ characterRawData, characterEpisodes }) => {
+    const {id, name, image, status, location, species} = characterRawData;
 
-    const episodesArr = firstThreeEpisodes.map(ep => (
-        <li className={classes.episodesList} key={ep.id}>{ep.name}</li>
-    ));
+    const episodesToDisplay = characterEpisodes.map(episode => (
+        <li key={episode.id}>{episode.name}</li>
+    ))
 
     return <Fragment>
         <div key={id} className={classes.card}>
@@ -21,7 +20,7 @@ const Card = ({ character }) => {
                 <p><span>Location:</span> {location.name}</p>
                 <p><span>Episodes:</span></p>
                 <ul>
-                    {episodesArr}
+                    {episodesToDisplay}
                 </ul>
             </div>
 

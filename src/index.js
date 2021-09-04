@@ -10,8 +10,7 @@ import {ApolloProvider, createHttpLink, InMemoryCache} from "@apollo/react-hooks
 
 const link = createHttpLink({
     uri: 'https://rickandmortyapi.com/graphql',
-    //credentials: 'same-origin'
-})
+});
 
 const client = new ApolloClient({
     cache: new InMemoryCache(),
