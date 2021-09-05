@@ -25,7 +25,7 @@ const DataListGQL = () => {
     });
 
     const handlePage = (isNext) => fetchMore({variables: {
-            page: data.characters.info.next
+            page: page
         },
         updateQuery: (prev, {fetchMoreResults}) => {
             if (!fetchMoreResults) return prev;
@@ -33,10 +33,8 @@ const DataListGQL = () => {
                 characters: [...prev.characters, ...fetchMoreResults.characters]
             });
         }
-    }).then(characterInfoAndData => {
-        const pageNumber = isNext
-            ? characterInfoAndData.data.characters.info.next - 1
-            : characterInfoAndData.data.characters.info.prev - 1;
+    }).then(() => {
+        const pageNumber = isNext ? page + 1 : page - 1;
         setPage(pageNumber);
     });
 
