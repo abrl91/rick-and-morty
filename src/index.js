@@ -15,7 +15,7 @@ const link = createHttpLink({
 const client = new ApolloClient({
     cache: new InMemoryCache(),
     link
-})
+});
 
 ReactDOM.render(
   <React.StrictMode>

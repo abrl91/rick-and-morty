@@ -17,20 +17,13 @@ const DataListGQL = () => {
         },
     );
 
-    if (loading) return <h3>Loading...</h3>
-    if (error) return  <h3>Error {error.message}</h3>
-
-    const charactersMapped = data?.characters.results.map(character => {
-        return  <CardDataGraphQL key={character.id} character={character} />
-    });
-
     const handlePage = (isNext) => fetchMore({variables: {
             page: page
         },
-        updateQuery: (prev, {fetchMoreResults}) => {
-            if (!fetchMoreResults) return prev;
+        updateQuery: (prev, {fetchMoreResult}) => {
+            if (!fetchMoreResult) return prev;
             return Object.assign({}, prev, {
-                characters: [...prev.characters, ...fetchMoreResults.characters]
+                characters: {...prev.characters, ...fetchMoreResult.characters}
             });
         }
     }).then(() => {
@@ -38,10 +31,16 @@ const DataListGQL = () => {
         setPage(pageNumber);
     });
 
+    const characters = data?.characters.results.map(character => {
+        return  <CardDataGraphQL key={character.id} character={character} />
+    });
+
+    if (loading) return <h3>Loading...</h3>
+    if (error) return  <h3>Error {error.message}</h3>
 
     return <Fragment>
         <div className={classes.dataList}>
-            {charactersMapped}
+            {characters}
         </div>
         <div className={classes.btnWrapper}>
             <button
