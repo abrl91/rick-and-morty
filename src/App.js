@@ -6,7 +6,6 @@ import {Route} from "react-router-dom";
 import DataListGQL from "./components/DataListGQL";
 import DataListUseQuery from "./components/DataListUseQuery";
 import {QueryClient, QueryClientProvider} from "react-query";
-import Temp from "./components/Temp";
 
 function App() {
     const queryClint = new QueryClient();
@@ -23,7 +22,6 @@ function App() {
      </Route>
       <Route path='/graphql'>
           <DataListGQL />
-          {/*<Temp />*/}
       </Route>
 
   </Fragment>
