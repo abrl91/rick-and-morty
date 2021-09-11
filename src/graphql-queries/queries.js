@@ -26,31 +26,3 @@ export const CHARACTER_QUERY = gql`
       }
     }
    `
-
-export const CHARACTERS = gql`
-{
-  characters {
-    info {
-      next
-      prev
-      count
-      pages
-    }
-    results {
-      id
-      name
-      image
-      status
-      species
-      location {
-        name
-      }
-      episode {
-        id
-        name
-      }
-    }
-  }
-}
-
-`
