@@ -21,6 +21,7 @@ const DataListREST = () => {
             .then(({info: resDataInfo, results: resDataResults}) => {
                 setInfo(resDataInfo);
                 setResults(resDataResults);
+                setError(null);
             })
             .catch(error => {
                 setError(error);
