@@ -14,7 +14,10 @@ const DataListREST = () => {
     useEffect(() => {
         setLoading(true);
         fetch(`${baseApiEndPoint}/character/?page=${page}`)
-            .then(res => res.json())
+            .then(res => {
+                if (res.status !== 200) throw new Error('Error! Something went wrong :(');
+                return res.json();
+            })
             .then(({info: resDataInfo, results: resDataResults}) => {
                 setInfo(resDataInfo);
                 setResults(resDataResults);
@@ -35,7 +38,7 @@ const DataListREST = () => {
     const handlePrevious = () => setPage(page - 1);
 
     if (loading) return <h3>Loading..."</h3>
-    if (error) return <h3>Error {error.message}</h3>
+    if (error) return <h3>{error.message}</h3>
 
     return <Fragment>
         <div className={classes.dataList}>
